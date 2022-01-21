@@ -13,7 +13,7 @@ jobs:
       steps:
         - uses: bbcoders/library-shared-workflows/terraform.yml@v1
           with:
-            repository: 'bbcoders/terraform-iac-workflow'
+            repository: bbcoders/terraform-iac
             branch: master
             environment: build
             workspace: default
