@@ -7,46 +7,36 @@ on:
       branches:
       - master
 jobs:
-  terraform:
-    name: 'Terraform'
+  terraform-build:
     runs-on: ubuntu-latest
-    environment: global
+    environment: build
+      steps:
+        - uses: bbcoders/library-shared-workflows/terraform.yml@v1
+          with:
+            repository: 'bbcoders/terraform-iac-workflow'
+            branch: master
+            environment: build
+            workspace: default
+          secrets:
+            access_key: ${{ secrets.AWS_ACCESS_KEY }}
+            secret_key: ${{ secrets.AWS_SECRET_KEY }}
+            github_token: ${{ secrets.GH_PAT }}
+
+  terraform-deploy:
+  runs-on: ubuntu-latest
+  environment: deploy
+  if: github.event_name == 'push'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+      - uses: bbcoders/terraform-iac-workflow/.github/workflows/cd.yml@1
         with:
-          repository: bbcoders/terraform-iac
-          ref: development
-          token: ${{ secrets.GH_PAT }}
-
-      - name: Terraform Format
-        id: fmt
-        run: terraform fmt -check
-      
-      - name: Terraform Init
-        id: init
-        run: terraform init
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-
-      - name: Terraform Plan
-        env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        id: plan
-        if: github.event_name == 'pull_request'
-        run: terraform plan -no-color
-        continue-on-error: true
-
-      - name: Terraform Plan Status
-        if: steps.plan.outcome == 'failure'
-        run: exit 1
-
-      - name: Terraform Apply
-        if: github.ref == 'refs/heads/development' && github.event_name == 'push'
-        run: terraform apply -auto-approve
-
-
-
+          repository: 'bbcoders/terraform-iac-workflow'
+          branch: master
+          environment: deploy
+          workspace: default
+          commit_username: satheesh
+          commit_email: yshatheesh@gmail.com
+          commit_message: terraform state changes
+        secrets:
+          access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          github_token: ${{ secrets.GH_PAT }}
