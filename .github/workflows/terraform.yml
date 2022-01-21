@@ -8,35 +8,29 @@ on:
       - master
 jobs:
   terraform-build:
-    runs-on: ubuntu-latest
-    environment: build
-    steps:
-      - uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
-        with:
-          repository: bbcoders/terraform-iac
-          branch: master
-          environment: build
-          workspace: default
-        secrets:
-          access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          github_token: ${{ secrets.GH_PAT }}
+    uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
+    with:
+      repository: bbcoders/terraform-iac
+      branch: master
+      environment: build
+      workspace: default
+    secrets:
+      access_key: ${{ secrets.AWS_ACCESS_KEY }}
+      secret_key: ${{ secrets.AWS_SECRET_KEY }}
+      github_token: ${{ secrets.GH_PAT }}
 
   terraform-deploy:
-    runs-on: ubuntu-latest
-    environment: deploy
     if: github.event_name == 'push'
-    steps:
-      - uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
-        with:
-          repository: 'bbcoders/terraform-iac-workflow'
-          branch: master
-          environment: deploy
-          workspace: default
-          commit_username: satheesh
-          commit_email: yshatheesh@gmail.com
-          commit_message: terraform state changes
-        secrets:
-          access_key: ${{ secrets.AWS_ACCESS_KEY }}
-          secret_key: ${{ secrets.AWS_SECRET_KEY }}
-          github_token: ${{ secrets.GH_PAT }}
+    uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
+    with:
+      repository: 'bbcoders/terraform-iac-workflow'
+      branch: master
+      environment: deploy
+      workspace: default
+      commit_username: satheesh
+      commit_email: yshatheesh@gmail.com
+      commit_message: terraform state changes
+    secrets:
+      access_key: ${{ secrets.AWS_ACCESS_KEY }}
+      secret_key: ${{ secrets.AWS_SECRET_KEY }}
+      github_token: ${{ secrets.GH_PAT }}
