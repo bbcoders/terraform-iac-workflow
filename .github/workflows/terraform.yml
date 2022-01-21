@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: build
     steps:
-      - uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml
+      - uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
         with:
           repository: bbcoders/terraform-iac
           branch: master
@@ -27,7 +27,7 @@ jobs:
     environment: deploy
     if: github.event_name == 'push'
     steps:
-      - uses: bbcoders/library-shared-workflows/.github/workflows/cd.yml@v1.0.2
+      - uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
         with:
           repository: 'bbcoders/terraform-iac-workflow'
           branch: master
