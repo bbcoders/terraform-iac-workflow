@@ -27,7 +27,7 @@ jobs:
     environment: deploy
     if: github.event_name == 'push'
     steps:
-      - uses: bbcoders/terraform-iac-workflow/.github/workflows/cd.yml@v1.0.1
+      - uses: bbcoders/terraform-iac-workflow/.github/workflows/cd.yml@v1.0.2
         with:
           repository: 'bbcoders/terraform-iac-workflow'
           branch: master
