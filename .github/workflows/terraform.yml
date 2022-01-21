@@ -10,24 +10,24 @@ jobs:
   terraform-build:
     runs-on: ubuntu-latest
     environment: build
-      steps:
-        - uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml
-          with:
-            repository: bbcoders/terraform-iac
-            branch: master
-            environment: build
-            workspace: default
-          secrets:
-            access_key: ${{ secrets.AWS_ACCESS_KEY }}
-            secret_key: ${{ secrets.AWS_SECRET_KEY }}
-            github_token: ${{ secrets.GH_PAT }}
+    steps:
+      - uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml
+        with:
+          repository: bbcoders/terraform-iac
+          branch: master
+          environment: build
+          workspace: default
+        secrets:
+          access_key: ${{ secrets.AWS_ACCESS_KEY }}
+          secret_key: ${{ secrets.AWS_SECRET_KEY }}
+          github_token: ${{ secrets.GH_PAT }}
 
   terraform-deploy:
-  runs-on: ubuntu-latest
-  environment: deploy
-  if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    environment: deploy
+    if: github.event_name == 'push'
     steps:
-      - uses: bbcoders/terraform-iac-workflow/.github/workflows/cd.yml@1
+      - uses: bbcoders/terraform-iac-workflow/.github/workflows/cd.yml@v1.0.1
         with:
           repository: 'bbcoders/terraform-iac-workflow'
           branch: master
