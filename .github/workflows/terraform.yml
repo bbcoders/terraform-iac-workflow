@@ -1,4 +1,4 @@
-name: 'Terraform troocart IAM Account One time Setup'
+name: 'Terraform Setup for build tools'
 on:
   push:
     branches:
