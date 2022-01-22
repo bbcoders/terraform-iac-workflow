@@ -18,7 +18,7 @@ jobs:
     secrets:
       access_key: ${{ secrets.AWS_ACCESS_KEY }}
       secret_key: ${{ secrets.AWS_SECRET_KEY }}
-      github_token: ${{ secrets.GH_PAT }}
+      github_pat: ${{ secrets.GH_PAT }}
 
   terraform-deploy:
     if: github.event_name == 'push'
@@ -34,4 +34,4 @@ jobs:
     secrets:
       access_key: ${{ secrets.AWS_ACCESS_KEY }}
       secret_key: ${{ secrets.AWS_SECRET_KEY }}
-      github_token: ${{ secrets.GH_PAT }}
+      github_pat: ${{ secrets.GH_PAT }}
