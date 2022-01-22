@@ -15,6 +15,9 @@ jobs:
       branch: master
       environment: build
       workspace: default
+      commit_username: satheesh
+      commit_email: yshatheesh@gmail.com
+      commit_message: terraform state changes
     secrets:
       access_key: ${{ secrets.AWS_ACCESS_KEY }}
       secret_key: ${{ secrets.AWS_SECRET_KEY }}
