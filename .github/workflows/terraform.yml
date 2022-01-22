@@ -6,11 +6,10 @@ on:
   pull_request:
     branches:
       - master
-  workflow_dispatch:
 
 jobs:
   terraform-build:
-    uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
+    uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@master
     with:
       repository: bbcoders/terraform-iac
       branch: master
@@ -23,7 +22,7 @@ jobs:
 
   terraform-deploy:
     if: github.event_name == 'push'
-    uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@v1.0.2
+    uses: bbcoders/library-shared-workflows/.github/workflows/terraform.yml@master
     with:
       repository: 'bbcoders/terraform-iac-workflow'
       branch: master
